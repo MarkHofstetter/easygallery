@@ -1,7 +1,5 @@
 <?php // ###########################################################//
 // #  script by tholtkoetter                  www.freitagmorgen.de #//
-// #                                                               #//
-// #  this script has been published under the gnu public license  #//
 // #################################################################//
 
 // title

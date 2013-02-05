@@ -1,7 +1,5 @@
 <?php // ###########################################################//
 // #  script by tholtkoetter                  www.freitagmorgen.de #//
-// #                                                               #//
-// #  this script has been published under the gnu public license  #//
 // #################################################################//
 
 // Root directory
@@ -24,7 +22,6 @@ class SelectData {
 		$this -> action = $newaction;
 		$this -> paths = $newpaths;
 	}
-
 }
 
 // #################################################################//
