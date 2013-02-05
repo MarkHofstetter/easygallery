@@ -49,7 +49,7 @@
         <copy todir="${dist.folder}/easygallery/img">
             <fileset dir="easygallery/img"/>
         </copy>
- 		<mkdir dir="PICTURES"/>
+ 		<mkdir dir="${dist.folder}/PICTURES"/>
 		
 		<fileset id="index.php" dir="${dist.folder}" includes="index.php"/>
 		<!-- replace js with minified version -->
@@ -64,7 +64,11 @@
             match="\&lt;!--.*?--\&gt;"
             replace="" flags="gs" byline="false">
             <fileset refid="index.php"/>
-            <!-- <fileset refid="html.fileset"/> -->
+        </replaceregexp>
+        <replaceregexp
+            match="//.*?$"
+            replace="" flags="gs" byline="true">
+            <fileset refid="index.php"/>
         </replaceregexp>
         <!-- Empty lines -->
         <replaceregexp 

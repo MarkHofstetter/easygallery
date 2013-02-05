@@ -8,7 +8,22 @@ $title = "EasyGallery";
 // google analytics properties id, UA-XXXXX-Y
 $googleanalyticsid = "";
 
-// ##############################################################// ?>
+// #################################################################//
+
+// register templating engine
+require ("easygallery/html/Mustache/Autoloader.php");
+Mustache_Autoloader::register();
+$m = new Mustache_Engine(array(
+	'loader' => new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/easygallery/html'),
+));
+
+// load dependencies
+require ("easygallery/html/gallery.php");	
+// init and prepare data
+$galleryfolders = init($_SERVER['PHP_SELF']);
+// prepare images
+$galleryfiles = changefolder();
+?>
 
 <html>
 	<head>
@@ -44,22 +59,6 @@ $googleanalyticsid = "";
 	</head>
 
 	<body>
-	<?php	
-		// register templating engine
-		require ("easygallery/html/Mustache/Autoloader.php");
-		Mustache_Autoloader::register();
-		$m = new Mustache_Engine(array(
-	    	'loader' => new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/easygallery/html'),
-		));
-		
-		// load dependencies
-		require ("easygallery/html/gallery.php");	
-		// init and prepare data
-		$galleryfolders = init($_SERVER['PHP_SELF']);
-		// prepare images
-		$galleryfiles = changefolder();
-	?>
-	
 	<?php
 		// render select
 		echo $m->render('select', $galleryfolders);

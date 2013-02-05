@@ -50,7 +50,7 @@ function init($phpself_init) {
 		}
 	}
 	if (!is_dir($rootdir)) {
-		printError("Couldn't find a root directory. Please specify a valid directory for \$rootdir in gallery.php.");
+		printError("Empty or missing root directory. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
 	}
 	// init folders
 	return findfolders();
@@ -77,7 +77,7 @@ function findfolders() {
 		}
 	}
 	if (!$data) {
-		printError("Searched folders don't contain any image! Please change the \$rootdir.");
+		printError("No image folders found. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
 	}
 	closedir($roothandle);
 	rsort($data);
@@ -128,7 +128,7 @@ function changefolder() {
 		sort($files);
 		closedir($dirhandle);
 	} else {
-		printError("No Folders found. Please copy your image folders to the location specified in the \$rootdir in EasyGallery.php.");
+		printError("No images found. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
 	}
 	updatefolders();
 	
