@@ -1,0 +1,16 @@
+<div class="thumbnails">
+	{{#paths}}
+	<div class="outer">
+	{{#gps}}
+	<a class="fancybox-media" href="//maps.google.com/maps?q={{gps.lat}},{{gps.log}}+({{name}})&z=14&ll={{gps.lat}},{{gps.log}}">
+		<span></span>
+	</a>
+	{{/gps}}
+	<div class="thumbnail">
+		<a class="fancybox" href="{{path}}" rel="{{gallery}}">
+			<img src="{{thumbpath}}" alt="{{name}}">
+		</a>
+	</div>
+	</div>
+	{{/paths}}
+</div>

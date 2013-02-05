@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<project name="Visualizer" default="produce" basedir=".">
+
+	<property name="smaller.version" value="0.6.0-SNAPSHOT" />
+	<property name="dist.folder" value="./dist" />
+
+	<taskdef name="smaller" classname="de.matrixweb.smaller.clients.ant.SmallerTask" >
+      <classpath>
+        <pathelement location="easygallery/lib/smaller/ant-${smaller.version}.jar"/>
+      </classpath>
+	</taskdef>
+
+	<!-- execute smaller script -->
+	<target name="smaller">
+	    <echo message="building app-min.js..." />
+    	<smaller debug="true"
+             host="localhost"
+             port="1148"
+             processor="closure,lessjs,yuiCompressor"
+             in="easygallery/js/app.json"
+             out="easygallery/js/app-min.js"
+             target="${dist.folder}"
+             options="output:out-only=true">
+      		<fileset dir="." includes="easygallery/js/**/*.js,easygallery/img/**/*.*" excludes="easygallery/**/*.bin,easygallery/js/*-min.js" />
+    	</smaller>
+	</target>
+
+	<!-- delete target dirs -->
+	<target name="clean">
+		<delete dir="${dist.folder}"/>
+	</target>
+
+	<!-- postprocess, build app and zip result -->
+	<target name="app">
+    	<antcall target="clean"/>
+		<antcall target="smaller"/>
+
+		<echo message="copying and modifying files..."/>
+
+		<copy todir="${dist.folder}">
+			<fileset dir="." includes="index.html"/>
+		</copy>
+		<copy todir="${dist.folder}/easygallery">
+            <fileset dir="easygallery"/>
+        </copy>
+
+		<fileset id="index.html" dir="${dist.folder}" includes="index.html"/>
+		<!-- replace css with minified version -->
+		<replaceregexp 
+			match="\&lt;!-- #dev head start --\&gt;(.+)?\&lt;!-- #dev head end --\&gt;" 
+			replace="\&lt;link rel=&quot;stylesheet&quot; media=&quot;screen,print&quot; href=&quot;extensions/css/app-base64-min.css&quot; /\&gt;"
+			flags="gis" byline="false">
+			<fileset refid="index.html"/>
+		</replaceregexp>
+		<!-- replace js with minified version -->
+		<replaceregexp 
+			match="\&lt;!-- #dev body start --\&gt;(.+)?\&lt;!-- #dev body end --\&gt;" 
+			replace="\&lt;script src=&quot;extensions/js/app-min.js&quot;\&gt;\&lt;/script\&gt;" 
+			flags="gis" byline="false">
+			<fileset refid="index.html"/>
+		</replaceregexp>
+		<!-- remove comments -->
+        <replaceregexp
+            match="\&lt;!--.*?--\&gt;"
+            replace="" flags="gs" byline="false">
+            <fileset refid="index.html"/>
+            <!-- <fileset refid="html.fileset"/> -->
+        </replaceregexp>
+        <!-- Empty lines -->
+        <replaceregexp 
+            match="([\r\n])\s*[\r\n]" 
+            replace="\1" flags="gs" byline="false">
+			<fileset refid="index.html"/>
+        </replaceregexp>
+        <!-- set version -->
+        <exec executable="git" outputproperty="build.commit">
+		    <arg value="describe"/>
+		    <arg value="--always"/>
+		    <arg value="--abbrev=40"/>
+		</exec>
+        <replaceregexp 
+            match="\&lt;meta name=&quot;version&quot; content=&quot;.*?&quot;/\&gt;" 
+            replace="\&lt;meta name=&quot;version&quot; content=&quot;${build.commit}&quot;/\&gt;" 
+            flags="gs" byline="false">
+			<fileset refid="index.html"/>
+        </replaceregexp>
+
+		<echo message="zipping result..."/>
+
+		<zip destfile="${dist.folder}/visualizer.zip"
+       		basedir="${dist.folder}">
+       	</zip>
+	</target>
+	
+</project>
