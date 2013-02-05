@@ -28,3 +28,66 @@ Listen On: 127.0.0.1:1148
 2013-02-05 17:01:57,940  [qtp1884603565-17 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - 0 error(s), 1 warning(s)
 
 2013-02-05 17:01:58,696  [qtp1884603565-17 - /] INFO  d.m.smaller.pipeline.Pipeline - Finished executing pipeline
+2013-02-05 20:53:28,622  [main] INFO  de.matrixweb.smaller.internal.Server - 
+Version: Smaller(development)
+Listen On: 127.0.0.1:1148
+2013-02-05 21:30:28,326  [qtp1076825585-18 - /] INFO  d.m.smaller.osgi.http.Servlet - Handle smaller request from 127.0.0.1
+2013-02-05 21:30:28,609  [qtp1076825585-18 - /] INFO  d.m.smaller.pipeline.Pipeline - Building processor chain: closure,lessjs,yuiCompressor
+2013-02-05 21:30:28,616  [qtp1076825585-18 - /] INFO  d.m.smaller.pipeline.Pipeline - Executing processor merge for type 
+2013-02-05 21:30:28,627  [qtp1076825585-18 - /] INFO  d.m.smaller.pipeline.Pipeline - Executing processor closure for type 
+2013-02-05 21:30:34,927  [qtp1076825585-18 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - source.js:51: WARNING - Parse error. Non-JSDoc comment has annotations. Did you mean to start it with '/**'?
+
+2013-02-05 21:30:34,928  [qtp1076825585-18 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - /*!
+
+2013-02-05 21:30:34,928  [qtp1076825585-18 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - ^
+
+2013-02-05 21:30:34,928  [qtp1076825585-18 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - 
+
+2013-02-05 21:30:34,929  [qtp1076825585-18 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - 0 error(s), 1 warning(s)
+
+2013-02-05 21:30:35,967  [qtp1076825585-18 - /] INFO  d.m.smaller.pipeline.Pipeline - Finished executing pipeline
+2013-02-05 21:31:21,797  [qtp1076825585-16 - /] INFO  d.m.smaller.osgi.http.Servlet - Handle smaller request from 127.0.0.1
+2013-02-05 21:31:21,835  [qtp1076825585-16 - /] INFO  d.m.smaller.pipeline.Pipeline - Building processor chain: closure,lessjs,yuiCompressor
+2013-02-05 21:31:21,836  [qtp1076825585-16 - /] INFO  d.m.smaller.pipeline.Pipeline - Executing processor merge for type 
+2013-02-05 21:31:21,837  [qtp1076825585-16 - /] INFO  d.m.smaller.pipeline.Pipeline - Executing processor closure for type 
+2013-02-05 21:31:23,160  [qtp1076825585-16 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - source.js:51: WARNING - Parse error. Non-JSDoc comment has annotations. Did you mean to start it with '/**'?
+
+2013-02-05 21:31:23,161  [qtp1076825585-16 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - /*!
+
+2013-02-05 21:31:23,161  [qtp1076825585-16 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - ^
+
+2013-02-05 21:31:23,161  [qtp1076825585-16 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - 
+
+2013-02-05 21:31:23,161  [qtp1076825585-16 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - 0 error(s), 1 warning(s)
+
+2013-02-05 21:31:23,304  [qtp1076825585-16 - /] INFO  d.m.smaller.pipeline.Pipeline - Finished executing pipeline
+2013-02-05 21:31:50,534  [qtp1076825585-16 - /] INFO  d.m.smaller.osgi.http.Servlet - Handle smaller request from 127.0.0.1
+2013-02-05 21:31:50,545  [qtp1076825585-16 - /] INFO  d.m.smaller.pipeline.Pipeline - Building processor chain: closure,lessjs,yuiCompressor
+2013-02-05 21:31:50,546  [qtp1076825585-16 - /] INFO  d.m.smaller.pipeline.Pipeline - Executing processor merge for type 
+2013-02-05 21:31:50,554  [qtp1076825585-16 - /] INFO  d.m.smaller.pipeline.Pipeline - Executing processor closure for type 
+2013-02-05 21:31:51,573  [qtp1076825585-16 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - source.js:51: WARNING - Parse error. Non-JSDoc comment has annotations. Did you mean to start it with '/**'?
+
+2013-02-05 21:31:51,574  [qtp1076825585-16 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - /*!
+
+2013-02-05 21:31:51,574  [qtp1076825585-16 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - ^
+
+2013-02-05 21:31:51,574  [qtp1076825585-16 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - 
+
+2013-02-05 21:31:51,574  [qtp1076825585-16 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - 0 error(s), 1 warning(s)
+
+2013-02-05 21:31:51,625  [qtp1076825585-16 - /] INFO  d.m.smaller.pipeline.Pipeline - Finished executing pipeline
+2013-02-05 21:33:04,189  [qtp1076825585-15 - /] INFO  d.m.smaller.osgi.http.Servlet - Handle smaller request from 127.0.0.1
+2013-02-05 21:33:04,202  [qtp1076825585-15 - /] INFO  d.m.smaller.pipeline.Pipeline - Building processor chain: closure,lessjs,yuiCompressor
+2013-02-05 21:33:04,202  [qtp1076825585-15 - /] INFO  d.m.smaller.pipeline.Pipeline - Executing processor merge for type 
+2013-02-05 21:33:04,203  [qtp1076825585-15 - /] INFO  d.m.smaller.pipeline.Pipeline - Executing processor closure for type 
+2013-02-05 21:33:05,095  [qtp1076825585-15 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - source.js:51: WARNING - Parse error. Non-JSDoc comment has annotations. Did you mean to start it with '/**'?
+
+2013-02-05 21:33:05,095  [qtp1076825585-15 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - /*!
+
+2013-02-05 21:33:05,095  [qtp1076825585-15 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - ^
+
+2013-02-05 21:33:05,095  [qtp1076825585-15 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - 
+
+2013-02-05 21:33:05,096  [qtp1076825585-15 - /] INFO  d.m.s.c.ClosureProcessor$LoggerOutputStream - 0 error(s), 1 warning(s)
+
+2013-02-05 21:33:05,119  [qtp1076825585-15 - /] INFO  d.m.smaller.pipeline.Pipeline - Finished executing pipeline

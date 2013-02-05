@@ -14,7 +14,7 @@
 	<target name="smaller">
 	    <echo message="building app-min.js..." />
     	<smaller debug="true"
-             host="localhost"
+             host="127.0.0.1"
              port="1148"
              processor="closure,lessjs,yuiCompressor"
              in="easygallery/js/app.json"
@@ -38,56 +38,56 @@
 		<echo message="copying and modifying files..."/>
 
 		<copy todir="${dist.folder}">
-			<fileset dir="." includes="index.html"/>
+			<fileset dir="." includes="index.php"/>
 		</copy>
-		<copy todir="${dist.folder}/easygallery">
-            <fileset dir="easygallery"/>
+		<copy todir="${dist.folder}/easygallery/css">
+            <fileset dir="easygallery/css"/>
         </copy>
-
-		<fileset id="index.html" dir="${dist.folder}" includes="index.html"/>
-		<!-- replace css with minified version -->
-		<replaceregexp 
-			match="\&lt;!-- #dev head start --\&gt;(.+)?\&lt;!-- #dev head end --\&gt;" 
-			replace="\&lt;link rel=&quot;stylesheet&quot; media=&quot;screen,print&quot; href=&quot;extensions/css/app-base64-min.css&quot; /\&gt;"
-			flags="gis" byline="false">
-			<fileset refid="index.html"/>
-		</replaceregexp>
+        <copy todir="${dist.folder}/easygallery/html">
+            <fileset dir="easygallery/html"/>
+        </copy>
+        <copy todir="${dist.folder}/easygallery/img">
+            <fileset dir="easygallery/img"/>
+        </copy>
+ 		<mkdir dir="PICTURES"/>
+		
+		<fileset id="index.php" dir="${dist.folder}" includes="index.php"/>
 		<!-- replace js with minified version -->
 		<replaceregexp 
-			match="\&lt;!-- #dev body start --\&gt;(.+)?\&lt;!-- #dev body end --\&gt;" 
-			replace="\&lt;script src=&quot;extensions/js/app-min.js&quot;\&gt;\&lt;/script\&gt;" 
+			match="\&lt;!-- #dev head start --\&gt;(.+)?\&lt;!-- #dev head end --\&gt;" 
+			replace="\&lt;script src=&quot;easygallery/js/app-min.js&quot;\&gt;\&lt;/script\&gt;" 
 			flags="gis" byline="false">
-			<fileset refid="index.html"/>
+			<fileset refid="index.php"/>
 		</replaceregexp>
 		<!-- remove comments -->
         <replaceregexp
             match="\&lt;!--.*?--\&gt;"
             replace="" flags="gs" byline="false">
-            <fileset refid="index.html"/>
+            <fileset refid="index.php"/>
             <!-- <fileset refid="html.fileset"/> -->
         </replaceregexp>
         <!-- Empty lines -->
         <replaceregexp 
             match="([\r\n])\s*[\r\n]" 
             replace="\1" flags="gs" byline="false">
-			<fileset refid="index.html"/>
+			<fileset refid="index.php"/>
         </replaceregexp>
         <!-- set version -->
         <exec executable="git" outputproperty="build.commit">
 		    <arg value="describe"/>
-		    <arg value="--always"/>
+		    <arg value="--tag"/>
 		    <arg value="--abbrev=40"/>
 		</exec>
         <replaceregexp 
             match="\&lt;meta name=&quot;version&quot; content=&quot;.*?&quot;/\&gt;" 
             replace="\&lt;meta name=&quot;version&quot; content=&quot;${build.commit}&quot;/\&gt;" 
             flags="gs" byline="false">
-			<fileset refid="index.html"/>
+			<fileset refid="index.php"/>
         </replaceregexp>
 
 		<echo message="zipping result..."/>
 
-		<zip destfile="${dist.folder}/visualizer.zip"
+		<zip destfile="${dist.folder}/easygallery-${build.commit}.zip"
        		basedir="${dist.folder}">
        	</zip>
 	</target>
