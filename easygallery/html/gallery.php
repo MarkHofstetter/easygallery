@@ -115,14 +115,14 @@ function changefolder() {
 						printError("Thumbnail creation failed.");
 					}
 				}
-				if (!file_exists($ordner.'/thumbnails/gm_'.$filename)) {
-					if(!$gdlibchecked){
-						$gdlibchecked = checkgdlib();
-					}
-					if (!createthumb($ordner, 'gm', $filename, $gmwidth)) {
-						printError("Thumbnail creation failed.");
-					}
-				}
+				// if (!file_exists($ordner.'/thumbnails/gm_'.$filename)) {
+					// if(!$gdlibchecked){
+						// $gdlibchecked = checkgdlib();
+					// }
+					// if (!createthumb($ordner, 'gm', $filename, $gmwidth)) {
+						// printError("Thumbnail creation failed.");
+					// }
+				// }
 			}
 		}
 		sort($files);
