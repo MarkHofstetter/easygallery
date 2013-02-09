@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Visualizer" default="produce" basedir=".">
+<project name="Visualizer" default="app" basedir=".">
 
 	<property name="smaller.version" value="0.6.0-SNAPSHOT" />
 	<property name="dist.folder" value="./dist" />
@@ -16,7 +16,7 @@
     	<smaller debug="true"
              host="127.0.0.1"
              port="1148"
-             processor="closure,lessjs,yuiCompressor"
+             processor="closure,uglifyjs,lessjs,yuiCompressor"
              in="easygallery/js/app.json"
              out="easygallery/js/app-min.js"
              target="${dist.folder}"
@@ -80,7 +80,7 @@
         <exec executable="git" outputproperty="build.commit">
 		    <arg value="describe"/>
 		    <arg value="--tag"/>
-		    <arg value="--abbrev=40"/>
+		    <arg value="--abbrev=0"/>
 		</exec>
         <replaceregexp 
             match="\&lt;meta name=&quot;version&quot; content=&quot;.*?&quot;/\&gt;" 
