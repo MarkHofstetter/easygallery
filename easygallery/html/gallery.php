@@ -6,7 +6,7 @@
 $rootdir = "PICTURES";
 
 // filetypes
-$filetypes = array("bmp", "gif", "jpg", "jpeg", "png", "svg", "webp");
+$filetypes = array("jpg", "jpeg", "png");
 
 // size of thumbnails in pixel
 $tnwidth = 140;
@@ -30,8 +30,8 @@ class SelectData {
 function init($phpself_init) {
 	global $rootdir, $phpself;
 
-	// init self-reference
-	$phpself = $phpself_init;
+	// init self-reference, remove anchors
+	$phpself = preg_replace('/#.+$/i', '', $phpself_init);
 	// check and prepare root dir
 	if (strpos($rootdir, 'www') === 0) {
 		$rootdir = 'http://' . $rootdir;
@@ -104,9 +104,9 @@ function changefolder() {
 			if (!isdot($filename) && is_file($ordner.'/'.$filename) && isvalidfiletype($filename)) {
 					
 				$gps = getGPS($ordner.'/'.$filename);
-				
+				$gpsstyle = empty($gps) ? "" : "gps";
 				$thumbpath = $ordner.'/thumbnails/tn_'.$filename;
-				array_push($files, array('gallery' => $ordner, 'path' => $ordner.'/'.$filename, 'thumbpath' => $thumbpath, 'name' => $filename, 'gps' => $gps));
+				array_push($files, array('gallery' => $ordner, 'path' => $ordner.'/'.$filename, 'thumbpath' => $thumbpath, 'name' => $filename, 'gps' => $gps, 'gpsstyle' => $gpsstyle));
 				if (!file_exists($thumbpath)) {
 					if(!$gdlibchecked){
 						$gdlibchecked = checkgdlib();
@@ -168,14 +168,19 @@ function isdot($arg) {
 }
 
 function createthumb($folder, $prefix, $file, $maxsize) {
+	if(preg_match('/(\.jpg|\.jpeg)$/', $file)){
+		$image = imagecreatefromjpeg($folder.'/'.$file);
+	}
+	if(preg_match('/\.png$/', $file)){
+		$image = imagecreatefrompng($folder.'/'.$file);
+	}
 	list($width, $height) = getimagesize($folder.'/'.$file);
-	
+	$x_offset = ($width > $height) ? ($width - $height) / 2 : 0;
+	$y_offset = ($width < $height) ? ($height - $width) / 2 : 0;
 	$width = min($width, $height);
 	$tn = imagecreatetruecolor($maxsize, $maxsize)
 		or die('Cannot Initialize new GD image stream');
-	
-	$image = imagecreatefromjpeg($folder.'/'.$file);
-	imagecopyresampled($tn, $image, 0, 0, 0, 0, $maxsize, $maxsize, $width, $width);
+	imagecopyresampled($tn, $image, 0, 0, $x_offset, $y_offset, $maxsize, $maxsize, $width, $width);
 	if (!is_dir($folder.'/thumbnails')) {
 		mkdir($folder.'/thumbnails', 0775);
 	}

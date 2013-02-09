@@ -9,8 +9,9 @@ form {
 div.thumbnails {
 	width: 100%;
 }
-div.thumbnails a {
+div.outer{
 	position: relative;
+	float: left;
 }
 a.fancybox-media span {
 	background-image: url(../img/Google_Maps_Marker.png);
@@ -19,21 +20,25 @@ a.fancybox-media span {
 	height: 34px;
 	left: 6px;
 	top: 0px;
-	position: absolute;
+	position: relative;
+	float: left;
+	overflow: hidden;
 	z-index: 1;
 }
 a.fancybox img{
 	border: #FFF 3px solid;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	margin: 2px;
-	float: left;
-	position: relative;
+	margin: 2 2 2 2;
 	z-index: 0;
 	opacity:1;
 	filter:alpha(opacity=100); /* For IE8 and earlier */
 	-webkit-transition: opacity 0.1s;
 }
+a.fancybox.gps img
+{
+	margin: 2 2 2 -35;
+} 
 a.fancybox img:hover {
 	opacity:0.8;
 	filter:alpha(opacity=80); /* For IE8 and earlier */
