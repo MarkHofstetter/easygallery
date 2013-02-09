@@ -168,10 +168,10 @@ function isdot($arg) {
 }
 
 function createthumb($folder, $prefix, $file, $maxsize) {
-	if(preg_match('/(\.jpg|\.jpeg)$/', $file)){
+	if(preg_match('/(\.jpg|\.jpeg)$/i', $file)){
 		$image = imagecreatefromjpeg($folder.'/'.$file);
 	}
-	if(preg_match('/\.png$/', $file)){
+	if(preg_match('/\.png$/i', $file)){
 		$image = imagecreatefrompng($folder.'/'.$file);
 	}
 	list($width, $height) = getimagesize($folder.'/'.$file);
@@ -226,6 +226,9 @@ function divide($a) {
 }
 
 function getGPS($image) {
+	if (!preg_match('/(\.jpg|\.jpeg)$/i', $image)){
+		return null;
+	}
 	$exif = exif_read_data($image, 0, true);
 	if ($exif) {
 		$lat = $exif['GPS']['GPSLatitude'];
