@@ -31,7 +31,7 @@ $galleryfiles = changefolder();
 		<!-- TODO add meta tags -->
 		<meta name="description" content="">
 		<meta name="version" content=""/>
-
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		
 		<link rel="stylesheet" href="easygallery/css/easygallery.css" type="text/css" media="screen" />

@@ -100,9 +100,8 @@ function changefolder() {
 		$dirhandle = opendir($ordner);
 		$files = array();
 		$gdlibchecked = FALSE;
-		while ($filename = readdir($dirhandle)) {
+		while ($filename = readdir($dirhandle)) {			
 			if (!isdot($filename) && is_file($ordner.'/'.$filename) && isvalidfiletype($filename)) {
-					
 				$gps = getGPS($ordner.'/'.$filename);
 				$gpsstyle = empty($gps) ? "" : "gps";
 				$thumbpath = $ordner.'/thumbnails/tn_'.$filename;
