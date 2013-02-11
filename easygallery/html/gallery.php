@@ -10,7 +10,7 @@ $filetypes = array("jpg", "jpeg", "png");
 
 // size of thumbnails in pixel
 $tnwidth = 140;
-$gmwidth = 48;
+//$gmwidth = 48;
 
 // #################################################################//
 // helper classes
@@ -139,7 +139,6 @@ function changefolder() {
 
 function updatefolders() {
 	global $ordner, $folders;
-
 	// update selected field
 	for ($i = 0; $i < sizeof($folders -> paths); $i++) {
 		if ($folders -> paths[$i]['path'] == $ordner) {
@@ -152,18 +151,16 @@ function updatefolders() {
 
 function isvalidfiletype($filename) {
 	global $filetypes;
-	$result = FALSE;
-	for ($i = 0; $i < sizeof($filetypes); $i++) {
-		$postmp = strpos(strtolower($filename), strtolower($filetypes[$i]));
-		if ($postmp > 0) {
-			$result = TRUE;
+	foreach ($filetypes as $filetype) {
+		if(preg_match('/('.$filetype.')$/i', $filename)){
+			return TRUE;
 		}
 	}
-	return $result;
+	return FALSE;
 }
 
 function isdot($arg) {
-	return strcmp($arg, '.') == 0 || strcmp($arg, '..') == 0;
+	return preg_match('/$^\.{1,2}/i', $arg);
 }
 
 function createthumb($folder, $prefix, $file, $maxsize) {
@@ -192,7 +189,7 @@ function createthumb($folder, $prefix, $file, $maxsize) {
 	return true;
 }
 
-function drawBorder(&$img, &$color, $thickness = 1) { 
+function drawBorder($img, $color, $thickness = 1) { 
     $x1 = $y1 = 0;
     $x2 = $y2 = ImageSY($img) - 1; 
     for($i = 0; $i < $thickness; $i++){ 
