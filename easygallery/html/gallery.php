@@ -10,17 +10,65 @@ $filetypes = array("jpg", "jpeg", "png");
 
 // size of thumbnails in pixel
 $tnwidth = 140;
-//$gmwidth = 48;
+$gmwidth = 48;
 
 // #################################################################//
 // helper classes
 
 class SelectData {
 	public $action;
-	public $paths;
-	function __construct($newaction, $newpaths) {
+	public $dirs;
+	public $selectedsrc;
+	function __construct($newaction, $newdirs, $newselectedsrc) {
 		$this -> action = $newaction;
-		$this -> paths = $newpaths;
+		$this -> dirs = $newdirs;
+		$this -> selectedsrc = $newselectedsrc;
+	}
+}
+
+class Image {
+	public $img;
+	public $thumbnail;
+	public $gallery;
+	public $exif;
+	function __construct($newimg, $newthumbnail, $newgallery, $newexif){
+		$this -> img = $newimg;
+		$this -> thumbnail = $newthumbnail;
+		$this -> gallery = $newgallery;
+		$this -> exif = $newexif;
+	}
+}
+
+class Exif {
+	public $gps;
+	public $style;
+	public $datetime;
+	public $thumbnail;
+	function __construct($newgps, $newdatetime, $newthumbnail){
+		$this -> gps = $newgps;
+		$this -> datetime = $newdatetime;
+		$this -> thumbnail = $newthumbnail;
+		if(isset($this -> gps)){
+			$this -> style = "gps";
+		}
+	}
+}
+
+class Gps {
+	public $lat;
+	public $log;
+	function __construct($newlat, $newlog){
+		$this -> lat = $newlat;
+		$this -> log = $newlog;
+	}
+}
+
+class Path {
+	public $name;
+	public $src;
+	function __construct($newname, $newsrc) {
+		$this -> name = $newname;
+		$this -> src = $newsrc;
 	}
 }
 
@@ -57,56 +105,67 @@ function init($phpself_init) {
 }
 
 function findfolders() {
-	global $rootdir, $ordner, $phpself, $folders;
+	global $rootdir, $ordner, $phpself, $selectdata;
 
 	// check for image folders
 	$roothandle = opendir($rootdir);
-	$data = array();
+	$folders = array();
+	$selectedsrc;
 	while ($dirname = readdir($roothandle)) {
 		if (!isdot($filename) && is_dir($rootdir.'/'.$dirname)) {
 			$dirhandle = opendir($rootdir .'/'.$dirname);
 			while ($filename = readdir($dirhandle)) {
 				if (isvalidfiletype($filename)) {
 					$path = $rootdir.'/'.$dirname;
-					$selected = ($ordner == $rootdir.'/'. $dirname) ? 'selected' : '';
-					array_push($data, array('path' => $path, 'name' => $dirname, 'selected' => $selected));
+					if ($ordner == $rootdir.'/'. $dirname){
+						$selectedsrc = $ordner;
+					} 
+					array_push($folders, new Path($dirname, $path));
 					break;
 				}
 			}
 			closedir($dirhandle);
 		}
 	}
-	if (!$data) {
+	if (!$folders) {
 		printError("No image folders found. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
 	}
 	closedir($roothandle);
-	rsort($data);
+	rsort($folders);
 
-	$folders = new SelectData($phpself, $data);
-	return $folders;
+	$selectdata = new SelectData($phpself, $folders, $selectedsrc);
+	return $selectdata;
 }
 
 function changefolder() {
-	global $ordner, $folders, $tnwidth;
+	global $ordner, $selectdata, $tnwidth, $gmwidth;
 	extract($_POST);
 
 	// set initial variable $ordner
 	if (!isset($ordner)) {
-		$ordner = $folders -> paths[0]['path'];
+		$ordner = $selectdata -> dirs[0] -> src;
 	}
 
 	// scanning directories for image files
 	if (is_dir($ordner)) {
 		$dirhandle = opendir($ordner);
-		$files = array();
+		$images = array();
 		$gdlibchecked = FALSE;
 		while ($filename = readdir($dirhandle)) {			
 			if (!isdot($filename) && is_file($ordner.'/'.$filename) && isvalidfiletype($filename)) {
+				// image data
+				$thumbnail = $ordner.'/thumbnails/tn_'.$filename;
+				$image = new Path($filename, $ordner.'/'.$filename);
+				$exif = null;
+				// extract exif data
 				$gps = getGPS($ordner.'/'.$filename);
-				$gpsstyle = empty($gps) ? "" : "gps";
-				$thumbpath = $ordner.'/thumbnails/tn_'.$filename;
-				array_push($files, array('gallery' => $ordner, 'path' => $ordner.'/'.$filename, 'thumbpath' => $thumbpath, 'name' => $filename, 'gps' => $gps, 'gpsstyle' => $gpsstyle));
-				if (!file_exists($thumbpath)) {
+				if(isset($gps)){
+					$gmthumbnail = $ordner.'/thumbnails/gm_'.$filename;
+					$exif = new Exif($gps, null, $gmthumbnail);	
+				}
+				array_push($images, new Image($image, $thumbnail, $ordner, $exif));
+				
+				if (!file_exists($thumbnail)) {
 					if(!$gdlibchecked){
 						$gdlibchecked = checkgdlib();
 					}
@@ -114,37 +173,35 @@ function changefolder() {
 						printError("Thumbnail creation failed.");
 					}
 				}
-				// if (!file_exists($ordner.'/thumbnails/gm_'.$filename)) {
-					// if(!$gdlibchecked){
-						// $gdlibchecked = checkgdlib();
-					// }
-					// if (!createthumb($ordner, 'gm', $filename, $gmwidth)) {
-						// printError("Thumbnail creation failed.");
-					// }
-				// }
+				if (!empty($gps) && !file_exists($gmthumbnail)) {
+					if(!$gdlibchecked){
+						$gdlibchecked = checkgdlib();
+					}
+					if (!createthumb($ordner, 'gm', $filename, $gmwidth)) {
+						printError("Thumbnail creation failed.");
+					}
+				}
 			}
 		}
-		sort($files);
+		sort($images);
 		closedir($dirhandle);
 	} else {
 		printError("No images found. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
 	}
 	updatefolders();
 	
-	return array('paths' => $files);
+	return array('images' => $images);
 }
 
 // #################################################################//
 // helper functions
 
 function updatefolders() {
-	global $ordner, $folders;
+	global $ordner, $selectdata;
 	// update selected field
-	for ($i = 0; $i < sizeof($folders -> paths); $i++) {
-		if ($folders -> paths[$i]['path'] == $ordner) {
-			$folders -> paths[$i]['selected'] = 'selected';
-		} else {
-			$folders -> paths[$i]['selected'] = '';
+	foreach ($selectdata -> dirs as $dir) {
+		if ($dir -> src == $ordner) {
+			$selectdata -> selectedsrc = $ordner;
 		}
 	}
 }
@@ -246,7 +303,7 @@ function getGPS($image) {
 		$lat_decimal = toDecimal($lat_degrees, $lat_minutes, $lat_seconds, $lat_hemi);
 		$log_decimal = toDecimal($log_degrees, $log_minutes, $log_seconds, $log_hemi);
 
-		return array('lat' => $lat_decimal, 'log' => $log_decimal);
+		return new Gps($lat_decimal,$log_decimal);
 	} else {
 		return null;
 	}

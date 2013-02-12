@@ -1,14 +1,14 @@
 <div class="thumbnails">
-	{{#paths}}
+	{{#images}}
 	<div class="outer">
-	{{#gps}}
+	{{#exif}}
 	<a class="fancybox-media" href="//maps.google.com/maps?q={{name}}@{{gps.lat}},{{gps.log}}&z=14&ll={{gps.lat}},{{gps.log}}&z=15&t=m">
 		<span></span>
 	</a>
-	{{/gps}}
-	<a class="fancybox {{gpsstyle}}" href="{{path}}" rel="{{gallery}}">
-		<img src="{{thumbpath}}" alt="{{name}}">
+	{{/exif}}
+	<a class="fancybox {{exif.style}}" href="{{img.src}}" rel="{{gallery}}">
+		<img src="{{thumbnail}}" alt="{{img.name}}">
 	</a>
 	</div>
-	{{/paths}}
+	{{/images}}
 </div>

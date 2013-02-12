@@ -1,9 +1,9 @@
 <div class="select">
 	<form name="fotoalbum" method="post" action="{{action}}" accept-charset="utf-8">
 		<select id="gallery" name="ordner" onchange="document.fotoalbum.submit();">	
-			{{#paths}}
-			<option {{selected}} value="{{path}}">{{name}}</option>
-			{{/paths}}
+			{{#dirs}}
+			<option {{selected}} value="{{src}}">{{name}}</option>
+			{{/dirs}}
 		</select>
 	</form>
 </div>
