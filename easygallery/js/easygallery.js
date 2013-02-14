@@ -25,11 +25,22 @@ $(document).ready(function() {
 });
 
 $(document).ajaxComplete(function() {
-	$(".ajaxgetlink").click(function(){
+	$(".gallerylink").click(function(e){
 		var rest = $(this).data('gallery');
 		$.getJSON("easygallery/php/images.php/images/" + rest,
 			function(data){
 				$.get('easygallery/html/pictures.mustache', function(template) {
+				    var html = Mustache.to_html(template, data);
+				    $("#easygallery").html(html);
+				});
+			}
+		);
+	});
+	
+	$("#backlink").click(function(e){
+		$.getJSON("easygallery/php/folders.php/folders",
+			function(data){
+				$.get('easygallery/html/previews.mustache', function(template) {
 				    var html = Mustache.to_html(template, data);
 				    $("#easygallery").html(html);
 				});
