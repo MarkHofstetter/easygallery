@@ -1,6 +1,6 @@
-<div class="thumbnails">
-	{{#images}}
-	<div class="outer">
+<h2 class="gallery"><a href="javascript:location.reload();">back</a> | {{dir}}</h2>
+{{#images}}
+<div class="outer">
 	{{#exif}}
 	<a class="fancybox-media" href="//maps.google.com/maps?q={{name}}@{{gps.lat}},{{gps.log}}&z=14&ll={{gps.lat}},{{gps.log}}&z=15&t=m">
 		<span></span>
@@ -9,6 +9,5 @@
 	<a class="fancybox {{exif.style}}" href="{{img.src}}" rel="{{gallery}}">
 		<img src="{{thumbnail}}" alt="{{img.name}}">
 	</a>
-	</div>
-	{{/images}}
 </div>
+{{/images}}

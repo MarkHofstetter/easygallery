@@ -46,6 +46,9 @@
         <copy todir="${dist.folder}/easygallery/html">
             <fileset dir="easygallery/html"/>
         </copy>
+        <copy todir="${dist.folder}/easygallery/php">
+            <fileset dir="easygallery/php"/>
+        </copy>
         <copy todir="${dist.folder}/easygallery/img">
             <fileset dir="easygallery/img"/>
         </copy>
