@@ -38,7 +38,7 @@
 		<echo message="copying and modifying files..."/>
 
 		<copy todir="${dist.folder}">
-			<fileset dir="." includes="index.php"/>
+			<fileset dir="." includes="index.html"/>
 		</copy>
 		<copy todir="${dist.folder}/easygallery/css">
             <fileset dir="easygallery/css"/>
@@ -54,30 +54,25 @@
         </copy>
  		<mkdir dir="${dist.folder}/PICTURES"/>
 		
-		<fileset id="index.php" dir="${dist.folder}" includes="index.php"/>
+		<fileset id="index.html" dir="${dist.folder}" includes="index.html"/>
 		<!-- replace js with minified version -->
 		<replaceregexp 
-			match="\&lt;!-- #dev head start --\&gt;(.+)?\&lt;!-- #dev head end --\&gt;" 
+			match="\&lt;!-- #dev js start --\&gt;(.+)?\&lt;!-- #dev js end --\&gt;" 
 			replace="\&lt;script src=&quot;easygallery/js/app-min.js&quot;\&gt;\&lt;/script\&gt;" 
 			flags="gis" byline="false">
-			<fileset refid="index.php"/>
+			<fileset refid="index.html"/>
 		</replaceregexp>
 		<!-- remove comments -->
         <replaceregexp
             match="\&lt;!--.*?--\&gt;"
             replace="" flags="gs" byline="false">
-            <fileset refid="index.php"/>
-        </replaceregexp>
-        <replaceregexp
-            match="//.*?$"
-            replace="" flags="gs" byline="true">
-            <fileset refid="index.php"/>
+            <fileset refid="index.html"/>
         </replaceregexp>
         <!-- Empty lines -->
         <replaceregexp 
             match="([\r\n])\s*[\r\n]" 
             replace="\1" flags="gs" byline="false">
-			<fileset refid="index.php"/>
+			<fileset refid="index.html"/>
         </replaceregexp>
         <!-- set version -->
         <exec executable="git" outputproperty="build.commit">
@@ -89,7 +84,7 @@
             match="\&lt;meta name=&quot;version&quot; content=&quot;.*?&quot;/\&gt;" 
             replace="\&lt;meta name=&quot;version&quot; content=&quot;${build.commit}&quot;/\&gt;" 
             flags="gs" byline="false">
-			<fileset refid="index.php"/>
+			<fileset refid="index.html"/>
         </replaceregexp>
 
 		<echo message="zipping result..."/>

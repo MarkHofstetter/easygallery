@@ -6,11 +6,11 @@
 	findfolders();
 	$imagesApp = new \Slim\Slim();
 	$imagesApp->get('/images/:src', function ($dirname) {
-		global $folders;
-		foreach($folders['previews'][0] as $dir){
-			if(strcasecmp($dir -> name, $dirname) == 0)
+		global $folders;	
+		foreach($folders['previews'] as $preview){	
+			if(strcasecmp($preview -> dir -> name, $dirname) == 0)
 			{
-				echo json_encode(changefolder($dir -> src));
+				echo json_encode(changefolder($preview -> dir -> src));
 			}
 		}
 	});

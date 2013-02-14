@@ -86,8 +86,8 @@ class Path {
 function findfolders() {
 	global $rootdir, $folders;
 	if (!is_dir($rootdir)) {
-		return null;
 		printError("No root dir found. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
+		return null;
 	}
 	if (!isset($folders)) {
 		$roothandle = opendir($rootdir);
@@ -154,6 +154,7 @@ function changefolder($ordner) {
 		closedir($dirhandle);
 	} else {
 		printError($ordner.": No images found. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
+		return null;
 	}
 	
 	return new Gallery($images, $dir);

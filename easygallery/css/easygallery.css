@@ -4,7 +4,7 @@ div.outer{
 }
 h2.gallery{
 	font-family: 'Fjalla One', sans-serif;
-	margin: 0px 0px -6px 6px;
+	margin: 0px 0px -2px 6px;
 }
 h2.gallery a{
 	text-decoration: none;
@@ -43,7 +43,7 @@ div.error {
 div[class*='stack'] {
     float: left;
     position: relative;
-    margin: 15px;
+    margin: 5px 25px 20px 5px;
 }
 div[class*='stack'], div[class*='stack']:before, div[class*='stack']:after {
     border: #FFF 4px solid;
