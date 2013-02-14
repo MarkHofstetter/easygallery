@@ -30,6 +30,11 @@ a.fancybox img{
     -moz-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
 }
+a.fancybox img:hover{
+    -webkit-box-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+    -moz-box-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+}
 a.fancybox.gps img
 {
 	margin-left: -35px;
@@ -44,6 +49,11 @@ div[class*='stack'] {
     float: left;
     position: relative;
     margin: 5px 25px 20px 5px;
+}
+div[class*='stack']:hover {
+    -webkit-box-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+    -moz-box-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.4);
 }
 div[class*='stack'], div[class*='stack']:before, div[class*='stack']:after {
     border: #FFF 4px solid;
