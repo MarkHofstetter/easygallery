@@ -1,3 +1,6 @@
+#gallerycanvas {
+	height: 400px;
+}
 div.outer{
 	position: relative;
 	float: left;
@@ -38,11 +41,6 @@ a.fancybox img:hover{
 a.fancybox.gps img
 {
 	margin-left: -35px;
-} 
-div.error {
-	background-color: #999;
-	width: 100%;
-	padding: 30px 0 30px 20px;
 }
 
 div[class*='stack'] {

@@ -64,10 +64,10 @@ class Exif {
 
 class Gps {
 	public $lat;
-	public $log;
-	function __construct($newlat, $newlog){
+	public $lng;
+	function __construct($newlat, $newlng){
 		$this -> lat = $newlat;
-		$this -> log = $newlog;
+		$this -> lng = $newlng;
 	}
 }
 
@@ -86,7 +86,7 @@ class Path {
 function findfolders() {
 	global $rootdir, $folders;
 	if (!is_dir($rootdir)) {
-		printError("No root dir found. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
+		echo ("No root dir found. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
 		return null;
 	}
 	if (!isset($folders)) {
@@ -96,7 +96,7 @@ function findfolders() {
 		while ($dirname = readdir($roothandle)) {
 			$dir = $rootdir.'/'.$dirname;
 			if (!isdot($filename) && is_dir($dir)) {
-				$path = new Path($dirname, preg_replace('/^\.\.\/\.\.\//', '', $dir));
+				$path = new Path($dirname, changetoroot($dir));
 				$dirhandle = opendir($dir);
 				while ($filename = readdir($dirhandle)) {
 					if (isvalidfiletype($filename)) {
@@ -134,13 +134,13 @@ function changefolder($ordner) {
 		while ($filename = readdir($dirhandle)) {			
 			if (!isdot($filename) && is_file($ordner.'/'.$filename) && isvalidfiletype($filename)) {
 				// image data
-				$thumbnail = preg_replace('/^\.\.\/\.\.\//', '', $ordner.'/thumbnails/tn_'.$filename);
-				$image = new Path($filename, preg_replace('/^\.\.\/\.\.\//', '', $ordner.'/'.$filename));
+				$thumbnail = changetoroot($ordner.'/thumbnails/tn_'.$filename);
+				$image = new Path($filename, changetoroot($ordner.'/'.$filename));
 				$exif = null;
 				// extract exif data
 				$gps = getGPS($ordner.'/'.$filename);
 				if(isset($gps)){
-					$gmthumbnail = preg_replace('/^\.\.\/\.\.\//', '', $ordner.'/thumbnails/gm_'.$filename);
+					$gmthumbnail = changetoroot($ordner.'/thumbnails/gm_'.$filename);
 					$exif = new Exif($gps, null, $gmthumbnail);	
 				}
 				array_push($images, new Image($image, $thumbnail, $exif));
@@ -153,7 +153,7 @@ function changefolder($ordner) {
 		$dir = preg_replace('/^(.+\/)*/', '', $ordner);
 		closedir($dirhandle);
 	} else {
-		printError($ordner.": No images found. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
+		echo ($ordner.": No images found. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
 		return null;
 	}
 	
@@ -175,6 +175,10 @@ function isvalidfiletype($filename) {
 
 function isdot($arg) {
 	return preg_match('/$^\.{1,2}/i', $arg);
+}
+
+function changetoroot($src){
+	return preg_replace('/^(\.\.\/)*/', '', $src);
 }
 
 function createthumb($folder, $prefix, $file, $maxsize) {
@@ -218,7 +222,7 @@ function drawBorder($img, $color, $thickness = 1) {
 function checkgdlib() {
 	$modules = get_loaded_extensions();
 	if (!in_array("gd", $modules)) {
-		printError("Your webserver doesn't provide the use of the GD library, which is required to create thumbnails. Please create and add your thumbnails manually.");
+		echo ("Your webserver doesn't provide the use of the GD library, which is required to create thumbnails. Please create and add your thumbnails manually.");
 	}
 	return TRUE;
 }
@@ -246,8 +250,8 @@ function getGPS($image) {
 	$exif = exif_read_data($image, 0, true);
 	if ($exif) {
 		$lat = $exif['GPS']['GPSLatitude'];
-		$log = $exif['GPS']['GPSLongitude'];
-		if (!$lat || !$log)
+		$lng = $exif['GPS']['GPSLongitude'];
+		if (!$lat || !$lng)
 			return null;
 		// latitude values
 		$lat_degrees = divide($lat[0]);
@@ -256,24 +260,17 @@ function getGPS($image) {
 		$lat_hemi = $exif['GPS']['GPSLatitudeRef'];
 
 		// longitude values
-		$log_degrees = divide($log[0]);
-		$log_minutes = divide($log[1]);
-		$log_seconds = divide($log[2]);
-		$log_hemi = $exif['GPS']['GPSLongitudeRef'];
+		$lng_degrees = divide($lng[0]);
+		$lng_minutes = divide($lng[1]);
+		$lng_seconds = divide($lng[2]);
+		$lng_hemi = $exif['GPS']['GPSLongitudeRef'];
 
 		$lat_decimal = toDecimal($lat_degrees, $lat_minutes, $lat_seconds, $lat_hemi);
-		$log_decimal = toDecimal($log_degrees, $log_minutes, $log_seconds, $log_hemi);
+		$lng_decimal = toDecimal($lng_degrees, $lng_minutes, $lng_seconds, $lng_hemi);
 
-		return new Gps($lat_decimal,$log_decimal);
+		return new Gps($lat_decimal,$lng_decimal);
 	} else {
 		return null;
 	}
-}
-
-function printError($text) {
-	echo "<div class=\"error\">";
-	echo "<span class=\"content\">ERROR: $text</span>";
-	echo "</div>";
-	exit();
 }
 ?>

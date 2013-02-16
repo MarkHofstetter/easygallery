@@ -1,8 +1,11 @@
-<h2 class="gallery"><a id="backlink" href="javascript:void(0);">&lt;&lt;</a> {{dir}}</h2>
+<h2 class="gallery">
+	<a id="backlink" href="javascript:void(0);">&lt;&lt;</a> {{dir}} <a id="gmlink" data-gallery="{{dir}}" href="javascript:void(0);">Map</a>
+</h2>
+<div id="gallerycanvas">
 {{#images}}
 <div class="outer">
 	{{#exif}}
-	<a class="fancybox-media" href="//maps.google.com/maps?q={{name}}@{{gps.lat}},{{gps.log}}&z=14&ll={{gps.lat}},{{gps.log}}&z=15&t=m">
+	<a class="fancybox-media" href="//maps.google.com/maps?q={{name}}@{{gps.lat}},{{gps.lng}}&z=14&ll={{gps.lat}},{{gps.lng}}&z=15&t=m">
 		<span></span>
 	</a>
 	{{/exif}}
@@ -11,3 +14,4 @@
 	</a>
 </div>
 {{/images}}
+</div>
