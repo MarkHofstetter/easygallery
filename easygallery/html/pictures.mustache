@@ -1,5 +1,9 @@
-<h2 class="gallery">
-	<a id="backlink" href="javascript:void(0);">&lt;&lt;</a> {{dir}} <a id="gmlink" data-gallery="{{dir}}" href="javascript:void(0);">Map</a>
+<h2 class="gallery" data-gallery="{{dir}}">
+	<a id="backlink" href="javascript:void(0);">&lt;&lt;</a>
+	<a class="gallerylink" href="javascript:void(0);">{{dir}}</a>
+	{{#exifavailable}}
+	<a id="gmlink" href="javascript:void(0);">Map</a>
+	{{/exifavailable}}
 </h2>
 <div id="gallerycanvas">
 {{#images}}
@@ -14,4 +18,5 @@
 	</a>
 </div>
 {{/images}}
+<div style="clear:left;"></div>
 </div>

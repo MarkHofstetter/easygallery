@@ -26,7 +26,7 @@ $(document).ready(function() {
 
 $(document).ajaxComplete(function() {
 	$(".gallerylink").click(function(e){
-		var rest = $(this).data('gallery');
+		var rest = $(this).parent().data('gallery');
 		$.getJSON("easygallery/php/images.php/images/" + rest,
 			function(data){
 				$.get('easygallery/html/pictures.mustache', function(template) {
@@ -49,7 +49,7 @@ $(document).ajaxComplete(function() {
 	});
 	
 	$("#gmlink").click(function(e){
-		var rest = $(this).data('gallery');
+		var rest = $(this).parent().data('gallery');
 		$.getJSON("easygallery/php/images.php/images/" + rest,
 			function(data){
 				initialize(data);
@@ -93,6 +93,7 @@ function initialize(data) {
 			mapTypeIds : [google.maps.MapTypeId.ROADMAP, 'map_style']
 		}
 	};
+	$("#gallerycanvas").height('90%');
 	var map = new google.maps.Map(document.getElementById("gallerycanvas"), myOptions);
 	//Associate the styled map with the MapTypeId and set it to display.
 	map.mapTypes.set('map_style', styledMap);

@@ -1,5 +1,5 @@
-#gallerycanvas {
-	height: 400px;
+body{
+	background-color: #4D9ED8;	
 }
 div.outer{
 	position: relative;
@@ -12,6 +12,9 @@ h2.gallery{
 h2.gallery a{
 	text-decoration: none;
 	color:#CCC;	
+}
+h2.gallery a.gallerylink{
+	color:#000;	
 }
 a.fancybox-media span {
 	background-image: url(../img/Google_Maps_Marker.png);

@@ -30,10 +30,17 @@ class Preview {
 class Gallery {
 	public $images;
 	public $dir;
+	public $exifavailable;
 	function __construct($newimages, $newdir){
 		$this -> images = $newimages;
 		$this -> dir = $newdir;
-	}
+		foreach ($newimages as $image) {
+			if(!empty($image -> exif -> gps)){
+				$this -> exifavailable = TRUE;
+				break;
+			}
+		}
+	} 
 }
 
 class Image {
