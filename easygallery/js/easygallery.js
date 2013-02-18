@@ -18,13 +18,14 @@ $(document).ready(function() {
 	);
 });
 
-$(document).ajaxComplete(function() {
+$(document).ajaxComplete(function() {	
 	$(".gallerylink").click(function(e){
 		var rest = $(this).parent().data('gallery');
 		$.getJSON("easygallery/php/images.php/images/" + rest,
 			function(data){
 				$.get('easygallery/html/pictures.mustache', function(template) {
 				    var html = Mustache.to_html(template, data);
+				    //window.history.pushState(data, rest, rest);
 				    $("#easygallery").html(html);
 				});
 			}
@@ -36,6 +37,7 @@ $(document).ajaxComplete(function() {
 			function(data){
 				$.get('easygallery/html/previews.mustache', function(template) {
 				    var html = Mustache.to_html(template, data);
+				    //window.history.pushState(data, '', '');
 				    $("#easygallery").html(html);
 				});
 			}
@@ -81,7 +83,7 @@ function initialize(data) {
 		name : "Styled Map"
 	});
 	var myOptions = {
-		zoom : 14,
+		zoom : 1,
 		mapTypeId : google.maps.MapTypeId.ROADMAP,
 		mapTypeControlOptions : {
 			mapTypeIds : [google.maps.MapTypeId.ROADMAP, 'map_style']
@@ -104,15 +106,6 @@ function initialize(data) {
 			count++;
 		} 
 	}
-	// center map
-	var latsum = 0;
-	var lngsum = 0;
-	for(var i=0;i<coords.length;i++){
-		latsum += coords[i].lat();
-		lngsum += coords[i].lng(); 
-	}
-	var center = new google.maps.LatLng(latsum / coords.length, lngsum / coords.length);
-	map.setCenter(center);
 	// Construct the polygon
 	var mypath = new google.maps.Polyline({
 		path : coords,
@@ -124,6 +117,12 @@ function initialize(data) {
 	});
 	// set markers
 	setMarkers(map, coords, thumbnails);
+	
+	var bounds = new google.maps.LatLngBounds()
+	for ( var i=0;i<coords.length;i++) {
+	    bounds.extend(coords[i]);
+	    map.fitBounds(bounds);
+	}
 }
 
 function setMarkers(map, locations, images) {

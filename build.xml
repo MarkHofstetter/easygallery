@@ -62,7 +62,7 @@
 		<!-- replace css with minified version -->
 		<replaceregexp 
 			match="\&lt;!-- #dev css start --\&gt;(.+)?\&lt;!-- #dev css end --\&gt;" 
-			replace="\&lt;link rel=&quot;stylesheet&quot; media=&quot;screen,print&quot; href=&quot;easygallery/css/app-min.css&quot; /\&gt;"
+			replace="\&lt;link rel=&quot;stylesheet&quot; media=&quot;screen,print&quot; type=&quot;text/css&quot; href=&quot;easygallery/css/app-min.css&quot; /\&gt;"
 			flags="gis" byline="false">
 			<fileset refid="index.html"/>
 		</replaceregexp>
