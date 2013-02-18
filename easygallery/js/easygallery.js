@@ -16,12 +16,6 @@ $(document).ready(function() {
 			});
 		}
 	);
-	
-	var googleanalytics = {propertiesId: ""};
-	$.get('easygallery/html/googleanalytics.mustache', function(template) {
-	    var html = Mustache.to_html(template, googleanalytics);
-	    $("#googleanalytics").html(html);
-	});
 });
 
 $(document).ajaxComplete(function() {
