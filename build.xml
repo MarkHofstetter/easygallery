@@ -16,12 +16,12 @@
     	<smaller debug="true"
              host="127.0.0.1"
              port="1148"
-             processor="closure,uglifyjs,lessjs,yuiCompressor"
-             in="easygallery/js/app.json"
-             out="easygallery/js/app-min.js"
+             processor="closure,lessjs,uglifyjs,lessjs,yuiCompressor"
+             in="easygallery/js/app.json,easygallery/css/app.less"
+             out="easygallery/js/app-min.js,easygallery/css/app-min.css"
              target="${dist.folder}"
              options="output:out-only=true">
-      		<fileset dir="." includes="easygallery/js/**/*.js,easygallery/img/**/*.*" excludes="easygallery/**/*.bin,easygallery/js/*-min.js" />
+      		<fileset dir="." includes="easygallery/js/**/*.js,easygallery/css/**/*.less,easygallery/img/**/*.*" excludes="easygallery/**/*.bin,easygallery/js/*-min.js,easygallery/css/*-min.css" />
     	</smaller>
 	</target>
 
@@ -40,9 +40,6 @@
 		<copy todir="${dist.folder}">
 			<fileset dir="." includes="index.html"/>
 		</copy>
-		<copy todir="${dist.folder}/easygallery/css">
-            <fileset dir="easygallery/css"/>
-        </copy>
         <copy todir="${dist.folder}/easygallery/html">
             <fileset dir="easygallery/html"/>
         </copy>
@@ -59,6 +56,13 @@
 		<replaceregexp 
 			match="\&lt;!-- #dev js start --\&gt;(.+)?\&lt;!-- #dev js end --\&gt;" 
 			replace="\&lt;script src=&quot;easygallery/js/app-min.js&quot;\&gt;\&lt;/script\&gt;" 
+			flags="gis" byline="false">
+			<fileset refid="index.html"/>
+		</replaceregexp>
+		<!-- replace css with minified version -->
+		<replaceregexp 
+			match="\&lt;!-- #dev css start --\&gt;(.+)?\&lt;!-- #dev css end --\&gt;" 
+			replace="\&lt;link rel=&quot;stylesheet&quot; media=&quot;screen,print&quot; href=&quot;easygallery/css/app-min.css&quot; /\&gt;"
 			flags="gis" byline="false">
 			<fileset refid="index.html"/>
 		</replaceregexp>
