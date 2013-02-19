@@ -25,7 +25,6 @@ $(document).ajaxComplete(function() {
 			function(data){
 				$.get('easygallery/html/pictures.mustache', function(template) {
 				    var html = Mustache.to_html(template, data);
-				    //window.history.pushState(data, rest, rest);
 				    $("#easygallery").html(html);
 				});
 			}
@@ -37,7 +36,6 @@ $(document).ajaxComplete(function() {
 			function(data){
 				$.get('easygallery/html/previews.mustache', function(template) {
 				    var html = Mustache.to_html(template, data);
-				    //window.history.pushState(data, '', '');
 				    $("#easygallery").html(html);
 				});
 			}
@@ -127,9 +125,9 @@ function initialize(data) {
 
 function setMarkers(map, locations, images) {
 	for (var i = 0; i < locations.length; i++) {
-		var image = new google.maps.MarkerImage(images[i], new google.maps.Size(48, 48),
+		var image = new google.maps.MarkerImage(images[i], new google.maps.Size(56, 56),
 			new google.maps.Point(0, 0),
-			new google.maps.Point(24, 46));
+			new google.maps.Point(32, 52));
 		var marker = new google.maps.Marker({
 			position : locations[i],
 			map : map,

@@ -10,7 +10,7 @@ $filetypes = array("jpg", "jpeg", "png");
 
 // size of thumbnails in pixel
 $tnwidth = 140;
-$gmwidth = 48;
+$gmwidth = 56;
 
 // #################################################################//
 // helper classes
