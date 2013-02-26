@@ -1,0 +1,6 @@
+<h2 class="gallery" data-gallery="{{images.dir}}">
+	<a id="backlink" href="#/">&lt;&lt;</a>
+	<a class="gallerylink" href="#/gallery/{{dir}}">{{dir}}</a>
+	<a ng-show="exifavailable" id="gmlink" href="#/map/{{dir}}">Map</a>
+</h2>
+<div id="map_canvas" ng-controller="MapCtrl"></div>

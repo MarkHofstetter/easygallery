@@ -1,56 +1,95 @@
-$(document).ready(function() {
-	$(".fancybox").fancybox();
-	$('.fancybox-media').fancybox({
-		openEffect  : 'none',
-		closeEffect : 'none',
-		helpers : {
-			media : {}
-		}
-	});
-	
-	$.getJSON("easygallery/php/folders.php/folders",
-		function(data){
-			$.get('easygallery/html/previews.mustache', function(template) {
-			    var html = Mustache.to_html(template, data);
-			    $("#easygallery").html(html);
-			});
-		}
-	);
-});
+angular.module('easygallery', []).
+  config(function($routeProvider, $locationProvider) {
+    $routeProvider.
+      when('/', {controller:StartCtrl, templateUrl:'easygallery/html/gallery.html'}).
+      when('/gallery/:folder', {controller:ImageCtrl, templateUrl:'easygallery/html/images.html'}).
+      when('/map/:folder', {controller:MapCtrl, templateUrl:'easygallery/html/map.html'}).
+      otherwise({redirectTo:'/'});
+  });
 
-$(document).ajaxComplete(function() {	
-	$(".gallerylink").click(function(e){
-		var rest = $(this).parent().data('gallery');
-		$.getJSON("easygallery/php/images.php/images/" + rest,
-			function(data){
-				$.get('easygallery/html/pictures.mustache', function(template) {
-				    var html = Mustache.to_html(template, data);
-				    $("#easygallery").html(html);
-				});
-			}
-		);
+function StartCtrl($scope, $http) {
+	$http({
+	    url: "easygallery/php/folders.php/folders",
+	    method: "GET"
+	}).success(function(data, status, headers, config) {
+	    $scope.previews = data.previews;
+	}).error(function(data, status, headers, config) {
+	    $scope.status = status;
 	});
-	
-	$("#backlink").click(function(e){
-		$.getJSON("easygallery/php/folders.php/folders",
-			function(data){
-				$.get('easygallery/html/previews.mustache', function(template) {
-				    var html = Mustache.to_html(template, data);
-				    $("#easygallery").html(html);
-				});
-			}
-		);
+}
+
+function ImageCtrl($scope, $http, $routeParams) {
+	$http({
+	    url: "easygallery/php/images.php/images/" + $routeParams.folder,
+	    method: "GET"
+	}).success(function(data, status, headers, config) {
+	    $scope.images = data.images;
+	    $scope.dir = data.dir;
+	    $scope.exifavailable = data.exifavailable;
+	}).error(function(data, status, headers, config) {
+	    $scope.status = status;
 	});
-	
-	$("#gmlink").click(function(e){
-		var rest = $(this).parent().data('gallery');
-		$.getJSON("easygallery/php/images.php/images/" + rest,
-			function(data){
-				initialize(data);
-			});
-		}
-	);
-});
+}
+
+function MapCtrl($scope, $routeParams) {
+
+}
+
+//-----------------------------------
+
+// $(document).ready(function() {
+	// $(".fancybox").fancybox();
+	// $('.fancybox-media').fancybox({
+		// openEffect  : 'none',
+		// closeEffect : 'none',
+		// helpers : {
+			// media : {}
+		// }
+	// });
+// 	
+	// $.getJSON("easygallery/php/folders.php/folders",
+		// function(data){
+			// $.get('easygallery/html/previews.html', function(template) {
+			    // var html = Mustache.to_html(template, data);
+			    // $("#easygallery").html(html);
+			// });
+		// }
+	// );
+// });
+
+// $(document).ajaxComplete(function() {	
+	// $(".gallerylink").click(function(e){
+		// var rest = $(this).parent().data('gallery');
+		// $.getJSON("easygallery/php/images.php/images/" + rest,
+			// function(data){
+				// $.get('easygallery/html/pictures.html', function(template) {
+				    // var html = Mustache.to_html(template, data);
+				    // $("#easygallery").html(html);
+				// });
+			// }
+		// );
+	// });
+// 	
+	// $("#backlink").click(function(e){
+		// $.getJSON("easygallery/php/folders.php/folders",
+			// function(data){
+				// $.get('easygallery/html/previews.html', function(template) {
+				    // var html = Mustache.to_html(template, data);
+				    // $("#easygallery").html(html);
+				// });
+			// }
+		// );
+	// });
+// 	
+	// $("#gmlink").click(function(e){
+		// var rest = $(this).parent().data('gallery');
+		// $.getJSON("easygallery/php/images.php/images/" + rest,
+			// function(data){
+				// initialize(data);
+			// });
+		// }
+	// );
+// });
 
 function initialize(data) {
 	// Create an array of styles.

@@ -1,8 +1,4 @@
 [
-  "/easygallery/js/ext/jquery-1.9.1.min.js",
-  "/easygallery/js/ext/mustache.js",
+  "/easygallery/js/ext/angular.min.js",
   "/easygallery/js/easygallery.js",
-  "/easygallery/js/ext/jquery.fancybox.pack.js",
-  "/easygallery/js/ext/jquery.fancybox-media.js",
-  "/easygallery/js/ext/jquery.mousewheel-3.0.6.pack.js"
 ]

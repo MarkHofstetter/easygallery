@@ -1,0 +1,16 @@
+<h2 class="gallery" data-gallery="{{images.dir}}">
+	<a id="backlink" href="#/">&lt;&lt;</a>
+	<a class="gallerylink" href="#/gallery/{{dir}}">{{dir}}</a>
+	<a ng-show="exifavailable" id="gmlink" href="#/map/{{dir}}">Map</a>
+</h2>
+<div id="gallerycanvas">
+<div ng-repeat="image in images" class="outer">
+	<a ng-show="image.exif" class="fancybox-media" href="//maps.google.com/maps?q={{image.img.name}}@{{image.exif.gps.lat}},{{image.exif.gps.lng}}&z=14&ll={{image.exif.gps.lat}},{{image.exif.gps.lng}}&z=15&t=m">
+		<span></span>
+	</a>
+	<a class="fancybox {{image.exif.style}}" href="{{image.img.src}}" rel="{{image.dir}}">
+		<img ng-src="{{image.thumbnail}}" alt="{{image.img.name}}">
+	</a>
+</div>
+<div style="clear:left;"></div>
+</div>
