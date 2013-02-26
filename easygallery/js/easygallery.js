@@ -1,15 +1,15 @@
 angular.module('easygallery', []).
   config(function($routeProvider, $locationProvider) {
     $routeProvider.
-      when('/', {controller:StartCtrl, templateUrl:'easygallery/html/gallery.html'}).
+      when('/', {controller:GalleryCtrl, templateUrl:'easygallery/html/gallery.html'}).
       when('/gallery/:folder', {controller:ImageCtrl, templateUrl:'easygallery/html/images.html'}).
       when('/map/:folder', {controller:MapCtrl, templateUrl:'easygallery/html/map.html'}).
       otherwise({redirectTo:'/'});
   });
 
-function StartCtrl($scope, $http) {
+function GalleryCtrl($scope, $http) {
 	$http({
-	    url: "easygallery/php/folders.php/folders",
+	    url: "easygallery/php/gallery.php/gallery",
 	    method: "GET"
 	}).success(function(data, status, headers, config) {
 	    $scope.previews = data.previews;
@@ -35,62 +35,7 @@ function MapCtrl($scope, $routeParams) {
 
 }
 
-//-----------------------------------
-
-// $(document).ready(function() {
-	// $(".fancybox").fancybox();
-	// $('.fancybox-media').fancybox({
-		// openEffect  : 'none',
-		// closeEffect : 'none',
-		// helpers : {
-			// media : {}
-		// }
-	// });
-// 	
-	// $.getJSON("easygallery/php/folders.php/folders",
-		// function(data){
-			// $.get('easygallery/html/previews.html', function(template) {
-			    // var html = Mustache.to_html(template, data);
-			    // $("#easygallery").html(html);
-			// });
-		// }
-	// );
-// });
-
-// $(document).ajaxComplete(function() {	
-	// $(".gallerylink").click(function(e){
-		// var rest = $(this).parent().data('gallery');
-		// $.getJSON("easygallery/php/images.php/images/" + rest,
-			// function(data){
-				// $.get('easygallery/html/pictures.html', function(template) {
-				    // var html = Mustache.to_html(template, data);
-				    // $("#easygallery").html(html);
-				// });
-			// }
-		// );
-	// });
-// 	
-	// $("#backlink").click(function(e){
-		// $.getJSON("easygallery/php/folders.php/folders",
-			// function(data){
-				// $.get('easygallery/html/previews.html', function(template) {
-				    // var html = Mustache.to_html(template, data);
-				    // $("#easygallery").html(html);
-				// });
-			// }
-		// );
-	// });
-// 	
-	// $("#gmlink").click(function(e){
-		// var rest = $(this).parent().data('gallery');
-		// $.getJSON("easygallery/php/images.php/images/" + rest,
-			// function(data){
-				// initialize(data);
-			// });
-		// }
-	// );
-// });
-
+// TODO google map
 function initialize(data) {
 	// Create an array of styles.
 	var styles = [{

@@ -1,4 +1,5 @@
 [
   "/easygallery/js/ext/angular.min.js",
+  "/easygallery/js/ext/angular-resource.min.js",
   "/easygallery/js/easygallery.js",
 ]

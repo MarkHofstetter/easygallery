@@ -3,9 +3,9 @@
 	require ("Slim/Slim.php");
 	\Slim\Slim::registerAutoloader();
 
-	$foldersApp = new \Slim\Slim();
-	$foldersApp->get('/folders', function () {
+	$galleryApp = new \Slim\Slim();
+	$galleryApp->get('/gallery', function () {
 		echo json_encode(findfolders());
 	});
-	$foldersApp->run();
+	$galleryApp->run();
 ?>	

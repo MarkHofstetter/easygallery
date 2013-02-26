@@ -80,9 +80,11 @@ class Gps {
 
 class Path {
 	public $name;
+	public $encodedName;
 	public $src;
 	function __construct($newname, $newsrc) {
 		$this -> name = $newname;
+		$this -> encodedName = urlencode($newname);
 		$this -> src = $newsrc;
 	}
 }
@@ -157,7 +159,7 @@ function changefolder($ordner) {
 			}
 		}
 		sort($images);
-		$dir = preg_replace('/^(.+\/)*/', '', $ordner);
+		$dir = new Path(preg_replace('/^(.+\/)*/', '', $ordner), $ordner);
 		closedir($dirhandle);
 	} else {
 		echo ($ordner.": No images found. Please drop your images into the PICTURES/ folder or change the \$rootdir variable in gallery.php.");
