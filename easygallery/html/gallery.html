@@ -1,5 +1,5 @@
-<span ng-repeat="preview in previews" data-gallery="{{preview.dir.name}}">
-	<a class="gallerylink" href="#/gallery/{{preview.dir.encodedName}}">
+<span ng-repeat="preview in previews">
+	<a href="#/gallery/{{preview.dir.encodedName}}">
 		<div class="{{preview.style}}">
 			<img ng-src="{{preview.img}}" alt="{{preview.dir.name}}"/>
 		</div>
