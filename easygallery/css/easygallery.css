@@ -43,7 +43,7 @@
 .fancybox.gps img {
   margin-left: -35px;
 }
-.map {
+#map_canvas {
   width: 90%;
   height: 90%;
 }
