@@ -1,7 +1,7 @@
-<h2 class="gallery" data-gallery="{{images.dir}}">
-	<a id="backlink" href="#/">&lt;&lt;</a>
-	<a class="gallerylink" href="#/gallery/{{dir.encodedName}}">{{dir.name}}</a>
-	<a ng-show="exifavailable" id="gmlink" href="#/map/{{dir.encodedName}}">Map</a>
+<h2 class="gallery">
+	<a class="nav" href="#/">&lt;&lt;</a>
+	<a href="#/gallery/{{dir.encodedName}}">{{dir.name}}</a>
+	<a class="nav" ng-show="exifavailable" href="#/map/{{dir.encodedName}}">Map</a>
 </h2>
 <div id="gallerycanvas">
 <div ng-repeat="image in images" class="outer">

@@ -13,6 +13,7 @@ function GalleryCtrl($scope, $http) {
 	    method: "GET"
 	}).success(function(data, status, headers, config) {
 	    $scope.previews = data.previews;
+	    document.getElementById("map_canvas").className = 'map hide';
 	}).error(function(data, status, headers, config) {
 	    $scope.status = status;
 	});
@@ -26,17 +27,29 @@ function ImageCtrl($scope, $http, $routeParams) {
 	    $scope.images = data.images;
 	    $scope.dir = data.dir;
 	    $scope.exifavailable = data.exifavailable;
+		document.getElementById("map_canvas").className = 'map hide';
 	}).error(function(data, status, headers, config) {
 	    $scope.status = status;
 	});
 }
 
-function MapCtrl($scope, $routeParams) {
-
+function MapCtrl($scope, $http, $routeParams) {
+	$http({
+	    url: "easygallery/php/images.php/images/" + $routeParams.folder,
+	    method: "GET"
+	}).success(function(data, status, headers, config) {
+	    $scope.images = data.images;
+	    $scope.dir = data.dir;
+	    document.getElementById("map_canvas").className = 'map show';
+	    var map = initialize(data);
+	    map = setRoute(map, data.images);
+	    $scope.map = map;
+	}).error(function(data, status, headers, config) {
+	    $scope.status = status;
+	});
 }
 
-// TODO google map
-function initialize(data) {
+function initialize() {
 	// Create an array of styles.
 	var styles = [{
 		stylers : [{
@@ -65,53 +78,44 @@ function initialize(data) {
 		name : "Styled Map"
 	});
 	var myOptions = {
-		zoom : 1,
+		center : new google.maps.LatLng(53.553312,9.992666),
+		zoom : 10,
 		mapTypeId : google.maps.MapTypeId.ROADMAP,
 		mapTypeControlOptions : {
 			mapTypeIds : [google.maps.MapTypeId.ROADMAP, 'map_style']
 		}
 	};
-	$("#gallerycanvas").height('90%');
-	var map = new google.maps.Map(document.getElementById("gallerycanvas"), myOptions);
+	var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	//Associate the styled map with the MapTypeId and set it to display.
 	map.mapTypes.set('map_style', styledMap);
 	map.setMapTypeId('map_style');
+	return map;
+}
 
-	// fill with data
+function setRoute(map, images) {
+	// fill with data	
 	var thumbnails = [];
-	var coords = [];
+	var locations = [];
 	var count = 0;
-	for(var i=0;i<data.images.length;i++){
-		if(!jQuery.isEmptyObject(data.images[i].exif)){
-			thumbnails[count] = data.images[i].exif.thumbnail;
-			coords[count] = new google.maps.LatLng(data.images[i].exif.gps.lat, data.images[i].exif.gps.lng);
+	for (var i = 0; i < images.length; i++) {
+		if (isNotEmpty(images[i].exif)) {
+			thumbnails[count] = images[i].exif.thumbnail;
+			locations[count] = new google.maps.LatLng(images[i].exif.gps.lat, images[i].exif.gps.lng);
 			count++;
-		} 
+		}
 	}
 	// Construct the polygon
 	var mypath = new google.maps.Polyline({
-		path : coords,
+		path : locations,
 		strokeColor : '#000088',
 		strokeOpacity : 0.6,
 		strokeWeight : 3,
 		fillOpacity : 0,
 		map : map
 	});
-	// set markers
-	setMarkers(map, coords, thumbnails);
-	
-	var bounds = new google.maps.LatLngBounds()
-	for ( var i=0;i<coords.length;i++) {
-	    bounds.extend(coords[i]);
-	    map.fitBounds(bounds);
-	}
-}
 
-function setMarkers(map, locations, images) {
-	for (var i = 0; i < locations.length; i++) {
-		var image = new google.maps.MarkerImage(images[i], new google.maps.Size(56, 56),
-			new google.maps.Point(0, 0),
-			new google.maps.Point(32, 52));
+	for (var i = 0; i < locations.length; i++) {	
+		var image = new google.maps.MarkerImage(thumbnails[i], new google.maps.Size(56, 56), new google.maps.Point(0, 0), new google.maps.Point(32, 52));
 		var marker = new google.maps.Marker({
 			position : locations[i],
 			map : map,
@@ -122,4 +126,19 @@ function setMarkers(map, locations, images) {
 			window.location.href = marker.url;
 		});
 	}
+
+	var bounds = new google.maps.LatLngBounds()
+	for (var i = 0; i < locations.length; i++) {
+		bounds.extend(locations[i]);
+		map.fitBounds(bounds);
+	}
+	return map;
+}
+
+function isNotEmpty(obj) {
+    for(var prop in obj) {
+        if(obj.hasOwnProperty(prop))
+            return true;
+    }
+    return false;
 }
