@@ -16,7 +16,7 @@
     	<smaller debug="true"
              host="127.0.0.1"
              port="1148"
-             processor="closure,lessjs,uglifyjs,lessjs,yuiCompressor"
+             processor="lessjs,yuiCompressor,cssembed"
              in="easygallery/js/app.json,easygallery/css/app.less"
              out="easygallery/js/app-min.js,easygallery/css/app-min.css"
              target="${dist.folder}"
