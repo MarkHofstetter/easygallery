@@ -2,6 +2,7 @@
 	<a class="nav" href="#/">&lt;&lt;</a>
 	<a href="#/gallery/{{dir.encodedName}}">{{dir.name}}</a>
 	<a class="nav" ng-show="exifavailable" href="#/map/{{dir.encodedName}}">Map</a>
+	<a href="{{download}}">Download</a>
 </h2>
 <div ng-repeat="image in images" class="outer">
 	<a ng-show="image.exif" class="images-media" href="//maps.google.com/maps?q={{image.img.name}}@{{image.exif.gps.lat}},{{image.exif.gps.lng}}&z=14&ll={{image.exif.gps.lat}},{{image.exif.gps.lng}}&z=15&t=m">

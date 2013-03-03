@@ -26,6 +26,7 @@ function ImageCtrl($scope, $http, $routeParams) {
 	}).success(function(data, status, headers, config) {
 	    $scope.images = data.images;
 	    $scope.dir = data.dir;
+	    $scope.download = data.download;
 	    $scope.exifavailable = data.exifavailable;
 		document.getElementById("map_canvas").className = 'hide';
 	}).error(function(data, status, headers, config) {
@@ -40,6 +41,7 @@ function MapCtrl($scope, $http, $routeParams) {
 	}).success(function(data, status, headers, config) {
 	    $scope.images = data.images;
 	    $scope.dir = data.dir;
+	    $scope.download = data.download;
 	    document.getElementById("map_canvas").className = 'show';
 	    var map = initialize(data);
 	    map = setRoute(map, data.images);
