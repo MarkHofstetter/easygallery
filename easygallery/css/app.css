@@ -129,10 +129,13 @@ h2.gallery {
 }
 h2.gallery a {
   text-decoration: none;
-  color: #000;
+  color: #222;
 }
 h2.gallery a.nav {
   color: #CCC;
+}
+h2.gallery a.nav:hover {
+  color: #999;
 }
 .images-media span {
   background-image: url(../img/marker.png);

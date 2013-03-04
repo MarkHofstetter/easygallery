@@ -1,6 +1,6 @@
 <h2 class="gallery">
 	<a class="nav" href="#/">&lt;&lt;</a>
-	<a href="#/gallery/{{dir.encodedName}}">{{dir.name}}</a>
-	<a class="nav" href="#/map/{{dir.encodedName}}">Map</a>
-	<a href="{{download}}">Download</a>
+	<a ng-href="#/gallery/{{dir.encodedName}}">{{dir.name}}</a>
+	<a class="nav" ng-href="#/map/{{dir.encodedName}}">Map</a>
+	<a ng-href="{{download}}" ng-show="download">Download</a>
 </h2>
