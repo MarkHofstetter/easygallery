@@ -10,11 +10,6 @@ div[class*='stack'] {
   position: relative;
   margin: 5px 25px 64px 10px;
 }
-div[class*='stack']:hover {
-  -webkit-box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-}
 div[class*='stack'],
 div[class*='stack']:before,
 div[class*='stack']:after {

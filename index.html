@@ -7,20 +7,23 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<!-- #dev css start -->
 		<link rel="stylesheet" href="easygallery/css/app.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="easygallery/css/ext/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen" />
 		<!-- #dev css end -->
 		<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
 		<!-- easygallery content -->
-		<div ng-app="easygallery" style="max-width:1024px;">
+		<div ng-app="easygallery">
 			<div ng-view></div>
 			<div id="map_canvas"></div>
-		</div>
+		</div>		
 	</body>
 	<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- #dev js start -->
+	<script type="text/javascript" src="easygallery/js/ext/jquery.fancybox.js?v=2.1.4"></script>
+	<script type="text/javascript" src="easygallery/js/ext/jquery.fancybox-media.js?v=1.0.5"></script>
 	<script type="text/javascript" src="easygallery/js/map.js"></script>
 	<script type="text/javascript" src="easygallery/js/easygallery.js"></script>
 	<!-- #dev js end -->

@@ -32,6 +32,15 @@ function ImageCtrl($scope, $http, $routeParams) {
 	}).error(function(data, status, headers, config) {
 	    $scope.status = status;
 	});
+	// open in fancybox
+	$(".images").fancybox();
+	$(".images-media").fancybox({
+		openEffect  : 'none',
+		closeEffect : 'none',
+		helpers : {
+			media : {}
+		}
+	});
 }
 
 function MapCtrl($scope, $http, $routeParams) {

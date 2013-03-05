@@ -5,10 +5,10 @@
 	<a class="nav" ng-href="{{download}}" ng-show="download">Download</a>
 </h2>
 <div ng-repeat="image in images" class="outer">
-	<a ng-show="image.exif" class="images-media" href="//maps.google.com/maps?q={{image.img.name}}@{{image.exif.gps.lat}},{{image.exif.gps.lng}}&z=14&ll={{image.exif.gps.lat}},{{image.exif.gps.lng}}&z=15&t=m">
+	<a class="images-media" ng-show="image.exif" href="//maps.google.com/maps?q={{image.img.name}}@{{image.exif.gps.lat}},{{image.exif.gps.lng}}&z=14&ll={{image.exif.gps.lat}},{{image.exif.gps.lng}}&z=15&t=m">
 		<span></span>
 	</a>
-	<a class="images {{image.exif.style}}" href="{{image.img.src}}" rel="{{image.dir}}">
+	<a class="images {{image.exif.style}}" href="{{image.img.src}}" rel="{{dir.name}}">
 		<img ng-src="{{image.thumbnail}}" alt="{{image.img.name}}">
 	</a>
 </div>
