@@ -94,7 +94,7 @@ class Path {
 // main functions
 
 function findfolders() {
-	global $rootdir, $folders;
+	global $rootdir, $folders, $tnwidth;
 	if (!is_dir($rootdir)) {
 		return null;
 	}
@@ -104,7 +104,7 @@ function findfolders() {
 		$i = 1;
 		while ($dirname = readdir($roothandle)) {
 			$dir = $rootdir . '/' . $dirname;
-			if (!isdot($filename) && is_dir($dir)) {
+			if (!isdot($dir) && is_dir($dir)) {
 				$path = new Path($dirname, changetoroot($dir));
 				$dirhandle = opendir($dir);
 				while ($filename = readdir($dirhandle)) {
@@ -127,7 +127,7 @@ function findfolders() {
 }
 
 function changefolder($ordner) {
-	global $folders, $tnwidth, $gmwidth;
+	global $folders, $tnwidth, $gmwidth, $gdlibchecked;
 
 	// set initial variable $ordner
 	if (!isset($ordner)) {
@@ -193,6 +193,7 @@ function changetoroot($src) {
 }
 
 function createthumb($folder, $prefix, $file, $maxsize) {
+	global $gdlibchecked;
 	if (!file_exists($folder . '/thumbnails/' . $prefix . '_' . $file)) {
 		if (!$gdlibchecked) {
 			$gdlibchecked = checkgdlib();
@@ -260,7 +261,7 @@ function getGPS($image) {
 		return null;
 	}
 	$exif = exif_read_data($image, 0, true);
-	if ($exif) {
+	if ($exif && @$exif['GPS']['GPSLongitude'][0]) {
 		$lat = $exif['GPS']['GPSLatitude'];
 		$lng = $exif['GPS']['GPSLongitude'];
 		if (!$lat || !$lng)
@@ -285,7 +286,7 @@ function getGPS($image) {
 	}
 }
 
-function create_zip($files = array(), $destination = '') {
+function create_zip($files = array(), $destination = '', $overwrite = false) {
 	$valid_files = array();
 	if (is_array($files)) {
 		foreach ($files as $file) {
