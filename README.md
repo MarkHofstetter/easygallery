@@ -2,9 +2,7 @@ EasyGallery
 ===========
 EasyGallery is a smart and simple way to present photos on your own website without a complex installation or administration. Just upload and everything is there.
 
-EasyGallery uses the [fancybox](http://fancyapps.com/fancybox/) jquery plugin. Please contribute the license fee for fancybox.
-
-EasyGallery comes with the [Slim](http://www.slimframework.com/) PHP framework for the REST API, [AngularJS](http://angularjs.org/) and uses [Google Maps](https://developers.google.com/maps/).
+EasyGallery uses the [fancybox](http://fancyapps.com/fancybox/) jquery plugin (licensed under Creative Commons Attribution-NonCommercial 3.0 license). It comes with the [Slim](http://www.slimframework.com/) PHP framework, [AngularJS](http://angularjs.org/) and uses [Google Maps](https://developers.google.com/maps/).
 
 How to use
 ----------
