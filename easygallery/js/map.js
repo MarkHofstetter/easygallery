@@ -27,6 +27,7 @@ function initialize() {
 	var myOptions = {
 		center : new google.maps.LatLng(53.553312,9.992666),
 		zoom : 10,
+		scrollwheel: false,
 		mapTypeId : google.maps.MapTypeId.ROADMAP,
 		mapTypeControlOptions : {
 			mapTypeIds : [google.maps.MapTypeId.ROADMAP, 'map_style']
