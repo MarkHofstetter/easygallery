@@ -71,7 +71,8 @@ function setRoute(map, images) {
 			title: imageRefs[i].name
 		});
 		google.maps.event.addListener(marker, 'click', function() {
-			window.location.href = this.url;
+			//window.location.href = this.url;
+			$.fancybox( {href : this.url} );
 		});
 	}
 
